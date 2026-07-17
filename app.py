@@ -5,9 +5,9 @@ from dotenv import load_dotenv
 import pymupdf4llm
 import re
 import json
-import time
 from datetime import datetime
 
+# Load environment variables
 load_dotenv()
 
 # ─────────────────────────────────────────────────────────────
@@ -22,17 +22,11 @@ st.set_page_config(
 
 # ─────────────────────────────────────────────────────────────
 # CUSTOM CSS — Finance terminal aesthetic
-# Palette: #0A0C10 bg · #111318 surface · #1C2030 card
-#          #00D4AA accent (teal) · #F0C040 gold · #FF4D6D risk-red
-#          #E8EDF5 text · #8A94A8 muted
-# Type: 'JetBrains Mono' for data, 'Inter' for prose
-# Signature: animated score ring + horizontal metric tape
 # ─────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
 
-/* ── Reset & base ── */
 html, body, [class*="css"] {
     font-family: 'Inter', sans-serif;
     background-color: #0A0C10;
@@ -44,7 +38,6 @@ html, body, [class*="css"] {
     max-width: 1200px;
 }
 
-/* ── Header bar ── */
 .header-bar {
     display: flex;
     align-items: center;
@@ -75,7 +68,6 @@ html, body, [class*="css"] {
     letter-spacing: 0.05em;
 }
 
-/* ── Cards ── */
 .card {
     background: #111318;
     border: 1px solid #1C2030;
@@ -103,13 +95,6 @@ html, body, [class*="css"] {
     border-radius: 2px;
 }
 
-/* ── Score ring (signature element) ── */
-.score-ring-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-}
 .score-label {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.65rem;
@@ -133,7 +118,6 @@ html, body, [class*="css"] {
     margin-top: 0.3rem;
 }
 
-/* ── Metric chips ── */
 .metric-tape {
     display: flex;
     gap: 0.75rem;
@@ -166,30 +150,20 @@ html, body, [class*="css"] {
     text-overflow: ellipsis;
 }
 
-/* ── Risk meter ── */
-.risk-bar-container { margin-top: 0.4rem; }
 .risk-bar-track {
     background: #1C2030;
     border-radius: 4px;
     height: 6px;
     width: 100%;
     overflow: hidden;
+    margin-top: 0.4rem;
 }
 .risk-bar-fill {
     height: 100%;
     border-radius: 4px;
     transition: width 0.6s ease;
 }
-.risk-label-row {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 0.3rem;
-    font-size: 0.62rem;
-    color: #8A94A8;
-    font-family: 'JetBrains Mono', monospace;
-}
 
-/* ── Section heading ── */
 .section-heading {
     font-size: 0.68rem;
     font-weight: 600;
@@ -208,7 +182,6 @@ html, body, [class*="css"] {
     background: #1C2030;
 }
 
-/* ── Info rows ── */
 .info-row {
     display: flex;
     gap: 0;
@@ -239,28 +212,6 @@ html, body, [class*="css"] {
     line-height: 1.55;
 }
 
-/* ── Risks ── */
-.risk-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.6rem;
-    padding: 0.6rem 0;
-    border-bottom: 1px solid #1C2030;
-    font-size: 0.84rem;
-    color: #E8EDF5;
-    line-height: 1.5;
-}
-.risk-item:last-child { border-bottom: none; }
-.risk-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #FF4D6D;
-    margin-top: 0.45rem;
-    flex-shrink: 0;
-}
-
-/* ── Red flags / Green flags ── */
 .flag-row {
     display: flex;
     gap: 1rem;
@@ -291,7 +242,6 @@ html, body, [class*="css"] {
     line-height: 1.45;
 }
 
-/* ── Comp table ── */
 .comp-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
 .comp-table th {
     font-size: 0.62rem;
@@ -311,9 +261,7 @@ html, body, [class*="css"] {
     font-size: 0.78rem;
 }
 .comp-table tr:last-child td { border-bottom: none; }
-.comp-table .highlight-row td { background: #1C2030; color: #00D4AA; }
 
-/* ── Quote block (thesis) ── */
 .thesis-block {
     border-left: 3px solid #00D4AA;
     background: #0E1118;
@@ -326,7 +274,6 @@ html, body, [class*="css"] {
     margin-top: 0.5rem;
 }
 
-/* ── Streamlit overrides ── */
 .stRadio > div { gap: 0.5rem !important; }
 .stRadio label {
     background: #111318 !important;
@@ -336,7 +283,6 @@ html, body, [class*="css"] {
     color: #E8EDF5 !important;
     font-size: 0.84rem !important;
     cursor: pointer;
-    transition: border-color 0.15s;
 }
 .stRadio label:hover { border-color: #00D4AA !important; }
 div[data-testid="stFileUploader"] {
@@ -354,9 +300,7 @@ div[data-testid="stFileUploader"] {
     border-radius: 6px !important;
 }
 .stTextArea textarea:focus { border-color: #00D4AA !important; box-shadow: 0 0 0 2px rgba(0,212,170,0.1) !important; }
-div[data-testid="stAlert"] { border-radius: 6px !important; }
 
-/* Analyze button */
 .stButton > button {
     background: #00D4AA !important;
     color: #0A0C10 !important;
@@ -366,7 +310,7 @@ div[data-testid="stAlert"] { border-radius: 6px !important; }
     border: none !important;
     border-radius: 6px !important;
     padding: 0.65rem 2rem !important;
-    transition: opacity 0.15s !important;
+    width: 100%;
 }
 .stButton > button:hover { opacity: 0.85 !important; }
 
@@ -377,13 +321,11 @@ div[data-testid="stAlert"] { border-radius: 6px !important; }
     font-size: 0.78rem !important;
     border: 1px solid #2A3050 !important;
     border-radius: 6px !important;
+    width: 100%;
 }
 .stDownloadButton > button:hover { border-color: #00D4AA !important; }
 
-/* ── Spinner override ── */
 .stSpinner > div { border-color: #00D4AA transparent transparent transparent !important; }
-
-/* ── Hide default streamlit chrome ── */
 #MainMenu { visibility: hidden; }
 footer { visibility: hidden; }
 .viewerBadge_container__1QSob { display: none; }
@@ -493,10 +435,10 @@ Return exactly this structure:
     "business_model_clarity": 7,
     "risk_level": 6
   }},
-  "verdict": "STRONG PASS | PASS | WATCH | SOFT PASS | PASS"
+  "verdict": "STRONG PASS | PASS | WATCH | SOFT PASS | REJECT"
 }}
 
-Score investor_score 0–100 (≥80 = STRONG PASS, 65–79 = PASS, 50–64 = WATCH, 35–49 = SOFT PASS, <35 = PASS).
+Score investor_score 0–100 (≥80 = STRONG PASS, 65–79 = PASS, 50–64 = WATCH, 35–49 = SOFT PASS, <35 = REJECT).
 score_breakdown values are each out of 10.
 
 Pitch deck text:
@@ -535,18 +477,21 @@ if analyze_btn:
 
     with st.spinner("Running AI due diligence..."):
         try:
-            model = ChatGroq(model="llama-3.1-8b-instant", temperature=0.3)
+            # UPGRADED TO 70B MODEL FOR RELIABLE JSON OUTPUT (Still 100% Free on Groq)
+            model = ChatGroq(model="openai/gpt-oss-20b", temperature=0.3)
             prompt = PromptTemplate.from_template(ANALYSIS_PROMPT)
             chain = prompt | model
             response = chain.invoke({"text": input_text})
             raw_json = response.content.strip()
+            
             # Strip any accidental markdown fences
             raw_json = re.sub(r'^```json\s*', '', raw_json)
             raw_json = re.sub(r'^```\s*', '', raw_json)
             raw_json = re.sub(r'\s*```$', '', raw_json)
+            
             data = json.loads(raw_json)
         except json.JSONDecodeError:
-            st.error("Model returned non-JSON. Try again — Groq free tier occasionally truncates responses.")
+            st.error("Model returned non-JSON. Try again — occasionally the free tier truncates responses.")
             st.stop()
         except Exception as e:
             st.error(f"Analysis error: {e}")
@@ -639,7 +584,7 @@ if analyze_btn:
                 <div style="text-align:center;">
                     <div style="font-family:'JetBrains Mono',monospace; font-size:1.4rem; font-weight:600; color:{clr};">{val}<span style="font-size:0.7rem; color:#8A94A8;">/10</span></div>
                     <div style="font-size:0.62rem; color:#8A94A8; text-transform:uppercase; letter-spacing:0.08em; margin-top:0.2rem;">{labels.get(key, key)}</div>
-                    <div class="risk-bar-track" style="margin-top:0.4rem;">
+                    <div class="risk-bar-track">
                         <div class="risk-bar-fill" style="width:{pct}%; background:{clr};"></div>
                     </div>
                 </div>
@@ -690,8 +635,8 @@ if analyze_btn:
     red_flags = data.get("red_flags", [])
     green_flags = data.get("green_flags", [])
 
-    red_items = "".join([f'<div class="flag-item"><span style="color:#FF4D6D;">✕</span>{f}</div>' for f in red_flags])
-    green_items = "".join([f'<div class="flag-item"><span style="color:#00D4AA;">✓</span>{f}</div>' for f in green_flags])
+    red_items = "".join([f'<div class="flag-item"><span style="color:#FF4D6D;">✕</span> {f}</div>' for f in red_flags])
+    green_items = "".join([f'<div class="flag-item"><span style="color:#00D4AA;">✓</span> {f}</div>' for f in green_flags])
 
     st.markdown(f"""
     <div class="flag-row">
@@ -710,7 +655,7 @@ if analyze_btn:
     risks = data.get("risks", [])
     if risks:
         st.markdown('<div class="section-heading">Risk Register</div>', unsafe_allow_html=True)
-        risk_items = "".join([f'<div class="risk-item"><div class="risk-dot"></div>{r}</div>' for r in risks])
+        risk_items = "".join([f'<div class="risk-item"><div class="risk-dot" style="width:7px;height:7px;border-radius:50%;background:#FF4D6D;margin-top:0.45rem;flex-shrink:0;"></div>{r}</div>' for r in risks])
         st.markdown(f'<div class="card">{risk_items}</div>', unsafe_allow_html=True)
 
     # ── Export ──
