@@ -27,16 +27,6 @@ DealLens is an AI-assisted due diligence tool that analyzes startup pitch decks 
 
 ---
 
-## 📸 Preview
-
-> Replace these placeholders with screenshots stored in an `images/` folder.
-
-| Home | Multi-Model Comparison |
-|------|------------------------|
-| ![](images/home.png) | ![](images/comparison.png) |
-
----
-
 ## 🚀 What It Does
 
 Upload a startup pitch deck (PDF or pasted text) and DealLens automatically generates:
@@ -262,11 +252,6 @@ The generated analysis is intended to assist with startup screening and should *
 ## 👨‍💻 Author
 
 **Yogesh Pant**
-
-Final-year Computer Science student  
-Islington College (London Metropolitan University)
-
-GitHub: https://github.com/yogeshpan1
 
 ---
 
