@@ -52,12 +52,13 @@ This is meant to reflect a real concern in AI-assisted financial workflows: know
 
 ## Project Structure
 
-pitch-analyzer/
-├── app.py            # Main entry point — UI, tabs, orchestration
-├── ai_engine.py       # PDF text extraction + Groq API calls
-├── prompts.py         # The AI analysis prompt template
-├── styles.py          # Custom CSS (dark finance-terminal theme)
-└── requirements.txt   # Python dependencies
+- **`app.py`** — Main entry point: UI, tabs, orchestration
+- **`ai_engine.py`** — PDF text extraction + Groq API calls
+- **`prompts.py`** — The AI analysis prompt template
+- **`styles.py`** — Custom CSS (dark finance-terminal theme)
+- **`requirements.txt`** — Python dependencies
+
+**Design choice:** the app is intentionally kept as a small number of flat files rather than a deeply nested package structure. At this project's size, that keeps the codebase easy to read top-to-bottom without added indirection.
 
 **Design choice:** the app is intentionally kept as a small number of flat files rather than a deeply nested package structure. At this project's size, that keeps the codebase easy to read top-to-bottom without added indirection.
 
