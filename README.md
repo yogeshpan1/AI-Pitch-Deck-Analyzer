@@ -1,4 +1,4 @@
-# 🔬 DealLens-AI-Powered Pitch Deck Due Diligence Tool
+# 🔬 DealLens — AI-Powered Pitch Deck Due Diligence Tool
 
 ![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=flat&logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=flat&logo=streamlit&logoColor=white)
@@ -6,131 +6,270 @@
 ![Groq](https://img.shields.io/badge/Groq-F55036?style=flat&logo=groq&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green.svg?style=flat)
 
-DealLens is an AI-assisted due diligence tool that analyzes startup pitch decks and produces structured, investor-style analysis — built to mirror the first-pass screening a VC analyst does before a deal reaches a partner meeting.
+DealLens is an AI-assisted due diligence tool that analyzes startup pitch decks and produces structured, investor-style reports. It is designed to replicate the first-pass screening process a venture capital analyst performs before a startup reaches a partner meeting.
 
-**Live demo:** [getdeallens.streamlit.app](https://getdeallens.streamlit.app)
-
----
-
-## What It Does
-
-Upload a pitch deck (PDF or pasted text) and DealLens returns:
-
-- **Investor Score (0–100)** with a clear verdict — STRONG PASS / PASS / WATCH / SOFT PASS / REJECT
-- **Score Breakdown** across 6 dimensions: market opportunity, team quality, product differentiation, traction evidence, business model clarity, and risk level
-- **Investment Thesis** — an AI-generated bull case for the deal
-- **Red Flags & Green Flags** — quick-scan signal analysis
-- **Risk Register** — key risks identified in the deck
-- **Company Snapshot** — sector, stage, funding ask, market size at a glance
-- **Multi-Model Comparison** — run the same deck through multiple AI models to check how much they agree with each other
+🌐 **Live Demo:** https://getdeallens.streamlit.app
 
 ---
 
-## Why Multi-Model Comparison?
+## ✨ Features
 
-A single AI model's score is one opinion — and LLMs can be inconsistent, especially on ambiguous or thin decks. DealLens lets you run the same pitch text through two or three different models (from different model families, not just different sizes) and compares their scores.
-
-- **High agreement** (small score spread) → the signal is probably reliable
-- **Low agreement** (large score spread) → the deck is ambiguous and needs a human to actually read it, not just trust one AI's number
-
-This is meant to reflect a real concern in AI-assisted financial workflows: knowing when to trust a model's output and when to flag it for manual review.
+- 📄 Upload startup pitch decks as PDF files
+- 🧠 AI-powered investor-style due diligence reports
+- 📊 Investor Score (0–100) with investment verdict
+- 📈 Six-category score breakdown
+- 💡 AI-generated investment thesis
+- ✅ Green flags and red flags detection
+- ⚠️ Risk register generation
+- 🏢 Company snapshot extraction
+- 🤖 Multi-model comparison across multiple LLMs
+- 🌙 Dark finance-terminal inspired interface
 
 ---
 
-## Tech Stack
+## 📸 Preview
 
-| Layer | Tool |
-|---|---|
-| UI | [Streamlit](https://streamlit.io) |
-| AI orchestration | [LangChain](https://www.langchain.com/) + LangChain-Groq |
-| LLM inference | [Groq](https://groq.com) (free tier) — GPT-OSS 20B, GPT-OSS 120B, Llama 3.3 70B |
-| PDF parsing | [PyMuPDF4LLM](https://github.com/pymupdf/PyMuPDF4LLM) |
-| Secrets management | python-dotenv (local) / Streamlit Secrets (cloud) |
+> Replace these placeholders with screenshots stored in an `images/` folder.
+
+| Home | Multi-Model Comparison |
+|------|------------------------|
+| ![](images/home.png) | ![](images/comparison.png) |
+
+---
+
+## 🚀 What It Does
+
+Upload a startup pitch deck (PDF or pasted text) and DealLens automatically generates:
+
+- **Investor Score (0–100)** with one of five verdicts:
+  - STRONG PASS
+  - PASS
+  - WATCH
+  - SOFT PASS
+  - REJECT
+
+- **Score Breakdown** across six investment dimensions:
+  - Market Opportunity
+  - Team Quality
+  - Product Differentiation
+  - Traction
+  - Business Model
+  - Risk Level
+
+- **Investment Thesis**
+  - A concise AI-generated bull case explaining why the startup could be investable.
+
+- **Green Flags**
+  - Positive investment signals.
+
+- **Red Flags**
+  - Potential concerns requiring deeper investigation.
+
+- **Risk Register**
+  - Structured list of operational, technical, financial, and execution risks.
+
+- **Company Snapshot**
+  - Industry
+  - Funding Stage
+  - Funding Ask
+  - Market Size
+  - Business Model
+
+- **Multi-Model Comparison**
+  - Run the same pitch deck through multiple LLMs and compare their scores and reasoning.
+
+---
+
+## 🤖 Why Multi-Model Comparison?
+
+One AI model represents only **one opinion**.
+
+Large Language Models can produce different scores depending on architecture, training data, and reasoning style—especially when evaluating ambiguous startup decks.
+
+DealLens allows the same deck to be analyzed by multiple models from different model families.
+
+This helps identify whether the AI's assessment is consistent.
+
+### High agreement
+
+Small score spread between models usually indicates stronger confidence.
+
+### Low agreement
+
+Large score spread suggests the deck is ambiguous and deserves manual review instead of relying on a single AI-generated score.
+
+This mirrors a real-world challenge in AI-assisted financial workflows:
+
+> Knowing **when to trust AI** and **when human judgment is still required.**
+
+---
+
+## 🏗️ Architecture
+
+```text
+            Startup Pitch Deck
+                    │
+                    ▼
+         PDF Text Extraction
+                    │
+                    ▼
+          Prompt Engineering
+                    │
+                    ▼
+        Groq-hosted Large Language Models
+                    │
+                    ▼
+      Investor-Style Due Diligence Analysis
+                    │
+                    ▼
+         Streamlit Interactive Dashboard
+```
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|--------|------------|
+| Frontend | Streamlit |
+| AI Framework | LangChain |
+| LLM Provider | Groq |
+| Models | GPT-OSS 20B, GPT-OSS 120B, Llama 3.3 70B |
+| PDF Processing | PyMuPDF4LLM |
+| Environment Variables | python-dotenv |
 | Deployment | Streamlit Community Cloud |
 
 ---
 
-## Project Structure
+## 📂 Project Structure
 
-- **`app.py`** — Main entry point: UI, tabs, orchestration
-- **`ai_engine.py`** — PDF text extraction + Groq API calls
-- **`prompts.py`** — The AI analysis prompt template
-- **`styles.py`** — Custom CSS (dark finance-terminal theme)
-- **`requirements.txt`** — Python dependencies
+```text
+DealLens/
+├── app.py              # Main Streamlit application (UI, tabs, orchestration)
+├── ai_engine.py        # PDF text extraction and Groq API integration
+├── prompts.py          # Prompt templates for investor-style analysis
+├── styles.py           # Custom CSS (dark finance-terminal theme)
+├── requirements.txt    # Python dependencies
+└── README.md           # Project documentation
+```
 
-**Design choice:** the app is intentionally kept as a small number of flat files rather than a deeply nested package structure. At this project's size, that keeps the codebase easy to read top-to-bottom without added indirection.
-
-**Design choice:** the app is intentionally kept as a small number of flat files rather than a deeply nested package structure. At this project's size, that keeps the codebase easy to read top-to-bottom without added indirection.
-
----
-
-## Available Models
-
-| Model | Speed | Best for |
-|---|---|---|
-| GPT-OSS 20B | Fast | Quick screening, default choice |
-| GPT-OSS 120B | Deep | Slower but more nuanced reasoning on complex decks |
-| Llama 3.3 70B | Balanced | A different model family — useful for cross-checking scores |
-
-All available for free via Groq's API.
+The project intentionally uses a **flat file structure** instead of a deeply nested package hierarchy. For a project of this size, separating responsibilities into a handful of focused modules keeps the codebase easy to navigate while avoiding unnecessary complexity.
 
 ---
 
-## Handling Scanned PDFs
+## 🤖 Available Models
 
-Many real-world pitch decks are exported as image-based (scanned) PDFs, which have no extractable text layer. DealLens detects this case and prompts the user to paste the deck's text manually instead of failing silently:
+| Model | Speed | Best Use |
+|--------|-------|----------|
+| GPT-OSS 20B | ⚡ Fast | Everyday screening and quick analysis |
+| GPT-OSS 120B | 🧠 Deep | More detailed reasoning on complex decks |
+| Llama 3.3 70B | ⚖️ Balanced | Cross-checking results with a different model family |
 
-1. Open the PDF
-2. `Ctrl+A` → `Ctrl+C` to copy all text
-3. Switch to **Manual Text** mode in the app and paste
+All models are available through Groq's free tier.
 
 ---
 
-## Running Locally
+## 📄 Handling Scanned PDFs
+
+Some startup decks are exported as image-only PDFs and contain no machine-readable text.
+
+DealLens detects this automatically.
+
+Instead of failing silently, the application asks the user to paste the extracted text manually.
+
+### Steps
+
+1. Open the PDF.
+2. Press **Ctrl + A**.
+3. Press **Ctrl + C**.
+4. Switch to **Manual Text Mode**.
+5. Paste the copied text.
+
+This avoids adding OCR dependencies such as Tesseract, making deployment significantly simpler.
+
+---
+
+## ⚙️ Running Locally
 
 ```bash
-# 1. Clone the repo
+# Clone repository
 git clone https://github.com/yogeshpan1/AI-Automation.git
+
+# Enter project folder
 cd "AI-Automation/Pitch Deck Analyzer"
 
-# 2. Install dependencies
+# Install dependencies
 pip install -r requirements.txt
 
-# 3. Add your Groq API key
-echo "GROQ_API_KEY=your_key_here" > .env
+# Create .env file
+echo "GROQ_API_KEY=your_api_key_here" > .env
 
-# 4. Run
+# Run Streamlit
 streamlit run app.py
 ```
 
-Get a free Groq API key at [console.groq.com](https://console.groq.com).
+Get your free Groq API key at:
+
+https://console.groq.com
 
 ---
 
-## Deployment
+## ☁️ Deployment
 
-Deployed on **Streamlit Community Cloud**, connected directly to this GitHub repo — every push to `main` auto-redeploys.
+DealLens is deployed using **Streamlit Community Cloud**.
 
-API key is stored via Streamlit's built-in **Secrets** manager (not committed to the repo):
+Every push to the `main` branch automatically redeploys the application.
+
+Store your API key securely using Streamlit Secrets:
 
 ```toml
-GROQ_API_KEY = "your_key_here"
+GROQ_API_KEY="your_api_key_here"
 ```
 
 ---
 
-## Limitations & Honest Notes
+## 🚀 Future Improvements
 
-- **No persistent storage** — analysis history lives only in the browser session and resets on refresh. For a production version, this would move to a proper database (e.g. Postgres via Supabase).
-- **No OCR fallback** — image-based PDFs require manual text pasting rather than automatic OCR extraction, to keep the deployment dependency-free (OCR requires system-level binaries like Tesseract that aren't trivial to run on Streamlit Cloud).
-- **Free-tier LLMs** — Groq's free tier models occasionally deprecate or rate-limit; the model selector lets users switch if one becomes unavailable.
+- OCR support for scanned PDFs
+- Export reports as PDF
+- Historical report storage
+- User authentication
+- Financial statement analysis
+- Comparable startup benchmarking
+- RAG integration with startup databases
+- Investment memo generation
+- Portfolio tracking dashboard
 
 ---
 
-## Disclaimer
+## ⚠️ Limitations
 
-DealLens is an AI-assisted screening tool for educational and portfolio purposes. Output is not investment advice and should not be the sole basis for any funding decision.
+- No persistent database (analysis history resets after refresh)
+- OCR is intentionally omitted to keep deployment lightweight
+- Performance depends on Groq's free-tier model availability
+- AI-generated analysis should support—not replace—human investment decisions
 
 ---
 
-Built by **Yogesh Pant** — final-year Computer Science student, Islington College / London Metropolitan University.
+## 📄 Disclaimer
+
+DealLens is an educational and portfolio project.
+
+The generated analysis is intended to assist with startup screening and should **not** be considered investment advice. Investment decisions should always involve independent research, professional judgment, and additional due diligence.
+
+---
+
+## 👨‍💻 Author
+
+**Yogesh Pant**
+
+Final-year Computer Science student  
+Islington College (London Metropolitan University)
+
+GitHub: https://github.com/yogeshpan1
+
+---
+
+## ⭐ Support
+
+If you found this project interesting, consider giving it a **⭐ Star** on GitHub. It helps others discover the project and supports future development.
