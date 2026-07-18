@@ -196,6 +196,4 @@ DealLens is an educational and portfolio project. The generated analysis is inte
 ## Author
 
 **Yogesh Pant**
-Final-year Computer Science student
-Islington College (London Metropolitan University)
-GitHub: [github.com/yogeshpan1](https://github.com/yogeshpan1)
+
